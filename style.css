@@ -347,6 +347,13 @@
         grid-template-columns: 1fr;
     }
 }
+@media (max-width: 768px) {
+    body {
+        transform: scale(0.8);  /* Shrinks the entire page */
+        transform-origin: top left;
+        width: 125%;
+    }
+}
 
 
 
