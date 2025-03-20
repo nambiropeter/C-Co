@@ -297,5 +297,56 @@
             opacity: 1;
             transform: translateY(0);
         }
+        /* Keep everything the same and only tweak for smaller screens */
+@media (max-width: 768px) {
+    /* Ensure the container takes full width on mobile */
+    .container {
+        padding: 10px 3%;
+    }
+
+    /* Adjust header text for smaller screens */
+    .header-text {
+        font-size: 20px;
+    }
+    .header-text h1 {
+        font-size: 36px;
+    }
+
+    /* Make the navigation fit on smaller screens */
+    nav ul {
+        display: flex;
+        flex-wrap: wrap; /* Allows menu to wrap if needed */
+        justify-content: center;
+    }
+    nav ul li {
+        margin: 5px 10px;
+    }
+
+    /* Ensure images scale properly */
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    /* Stack sections vertically on smaller screens */
+    .row {
+        flex-direction: column;
+        text-align: center;
+    }
+    .about-col-1, .about-col-2 {
+        flex-basis: 100%;
+    }
+
+    /* Reduce padding for a cleaner mobile layout */
+    #about, #services, #contact {
+        padding: 40px 3%;
+    }
+
+    /* Keep services in a single column on smaller screens */
+    .services-list {
+        grid-template-columns: 1fr;
+    }
+}
+
 
 
