@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Mamati and Company Advocates</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -10,19 +10,26 @@
     <script defer src="/_vercel/insights/script.js"></script>
     
 </head>
-<script>
+    <script>
     document.addEventListener("DOMContentLoaded", function () {
         const reveals = document.querySelectorAll(".reveal");
+
+        // Use a lower threshold and small negative bottom margin so
+        // elements on short/mobile viewports still register as intersecting.
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -20% 0px'
+        };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add("active");
                 } else {
-                    entry.target.classList.remove("active"); // Remove class when out of view
+                    entry.target.classList.remove("active");
                 }
             });
-        }, { threshold: 0.5});
+        }, observerOptions);
 
         reveals.forEach((element) => {
             observer.observe(element);
@@ -36,13 +43,18 @@
         <div class="container">
             <nav>
                 <img src="images/logo40.jpg" class="logo">
-                <ul>
+                <ul id="nav-menu" class="nav-menu">
                     <li><a href="#header">Home</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#services">Services</a></li>
                     <li><a href="#success">Stories</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </nav>
             <div class="header-text">
                 <h1><span>Mamati</span> and Company<br>Advocates</h1>
@@ -190,6 +202,24 @@
                 event.currentTarget.classList.add("active-link");
                 document.getElementById(tabname).classList.add("active-tab");
             }
+
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        
+        hamburger.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // Close menu when a link is clicked
+        const navLinks = document.querySelectorAll('#nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
     </script>
     <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
