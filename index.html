@@ -3,12 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Mamati and Company Advocates</title>
+    <meta name="description" content="Mamati and Company Advocates - Leading law firm in Nairobi, Kenya. Specializing in litigation, corporate law, intellectual property, and family law. Expert legal services for businesses and individuals.">
+    <meta name="keywords" content="law firm Nairobi, Kenya advocates, corporate law, litigation, intellectual property, family law, legal services Kenya">
+    <meta name="author" content="Mamati and Company Advocates">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Mamati and Company Advocates - Legal Services in Nairobi, Kenya">
+    <meta property="og:description" content="Expert legal services including litigation, corporate law, intellectual property, and family law. Based in Nairobi, Kenya.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="images/logo40.jpg">
+    
+    <title>Mamati and Company Advocates - Legal Services in Nairobi, Kenya</title>
+    
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Load Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <script defer src="/_vercel/insights/script.js"></script>
     
+    <script defer src="/_vercel/insights/script.js"></script>
 </head>
     <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -42,15 +59,15 @@
     <div id="header">
         <div class="container">
             <nav>
-                <img src="images/logo40.jpg" class="logo">
-                <ul id="nav-menu" class="nav-menu">
+                <img src="images/logo40.jpg" class="logo" alt="Mamati and Company Advocates Logo" width="140" height="70">
+                <ul id="nav-menu" class="nav-menu" role="navigation" aria-label="Main navigation">
                     <li><a href="#header">Home</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#services">Services</a></li>
                     <li><a href="#success">Stories</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
-                <div class="hamburger" id="hamburger">
+                <div class="hamburger" id="hamburger" role="button" aria-label="Toggle navigation menu" aria-expanded="false">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -61,13 +78,12 @@
             </div>
         </div>
     </div>
-    </div>
 
     <div id="about" class="reveal">
         <div class="container">
             <div class="row">
                 <div class="about-col-1">
-                    <img src="images/law4.png">
+                    <img src="images/law4.png" alt="Legal representation and consulting" loading="lazy">
                 </div>
                 <div class="about-col-2">
                    <h1 class="sub-title">About Mamati And Company </h1>
@@ -128,7 +144,7 @@
                 <h1 class="sub-title">Success Stories</h1>
                 <div class="success-stories">
                     <div class="success1">
-                        <img src="images/man6.png">
+                        <img src="images/man6.png" alt="Client testimonial" loading="lazy">
                         <div class="layer">
                             <h3>Client, 2024</h3>
                             <p>"A professional legal practitioner who embeds risk mitigation in each step."</p>
@@ -136,7 +152,7 @@
                         </div>
                     </div>
                     <div class="success1">
-                        <img src="images/company.png">
+                        <img src="images/company.png" alt="Corporate client testimonial" loading="lazy">
                         <div class="layer">
                             <h3>Client, 2024</h3>
                             <p>"The level of professionalism from Mamati and Company is a breath of fresh air. We have enjoyed our work with him and look forward to working with him throughout 2024 and beyond."
@@ -147,7 +163,7 @@
                         </div>
                     </div>
                     <div class="success1">
-                        <img src="images/man6.png">
+                        <img src="images/man6.png" alt="Client testimonial" loading="lazy">
                         <div class="layer">
                             <h3>Client</h3>
                             <p>"Charles took me through my matter slowly and meticulously with care and support. His attention to detail, almost constant availability to pick up the phone and walk me through was something I would want everyone to experience from a lawyer in Nairobi and Kenya."</p>
@@ -182,12 +198,15 @@
         </div>
         <footer>
             <div class="copyright">
-                <p>&copy; 2025 Mamati and Company Advocates. All Rights Reserved.</p>
+                <p>&copy; <span id="copyright-year"></span> Mamati and Company Advocates. All Rights Reserved.</p>
             </div>
         </footer>
 
 
     <script>
+        // Update copyright year automatically
+        document.getElementById('copyright-year').textContent = new Date().getFullYear();
+        
         //About section transition
         var tablinks = document.getElementsByClassName("tab-links");
             var tabcontents = document.getElementsByClassName("tab-contents");
@@ -210,6 +229,8 @@
         hamburger.addEventListener('click', function() {
             navMenu.classList.toggle('active');
             hamburger.classList.toggle('active');
+            const isExpanded = hamburger.classList.contains('active');
+            hamburger.setAttribute('aria-expanded', isExpanded);
         });
 
         // Close menu when a link is clicked
@@ -221,6 +242,32 @@
             });
         });
     </script>
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LegalService",
+        "name": "Mamati and Company Advocates",
+        "description": "Leading law firm in Nairobi, Kenya specializing in litigation, corporate law, intellectual property, and family law",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Timau Plaza, 6th Floor, Wing B",
+            "addressLocality": "Nairobi",
+            "postalCode": "00200",
+            "addressCountry": "KE"
+        },
+        "telephone": "+254713590466",
+        "email": "chebosic@mamatiadvocates.net",
+        "url": "https://mamatiadvocates.net",
+        "priceRange": "$$",
+        "areaServed": {
+            "@type": "Country",
+            "name": "Kenya"
+        }
+    }
+    </script>
+    
     <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 

@@ -10,7 +10,6 @@
         body {
             background: #080808;
             color: #fff;
-            scroll-behavior: smooth;
         } 
         #header {
             position: relative;
@@ -112,7 +111,7 @@
             position: absolute;
             left: 0;
             bottom: -6px;
-            transition: 0.5s;
+            transition: width 0.5s;
         }
         nav ul li a:hover::after{
             width: 100%;
@@ -177,7 +176,7 @@
             position: absolute;
             left: 0;
             bottom: -8px;
-            transition: 0.5s;
+            transition: width 0.5s;
         }
         .tab-links.active-link::after{
             width: 50%;
@@ -264,6 +263,7 @@
             border-radius: 10px;
             display: block;
             transition: transform 0.5s;
+            will-change: transform;
         }
         .layer{
             width: 100%;
@@ -345,12 +345,14 @@
         .reveal {
             opacity: 0;
             transform: translateY(50px);
-            transition: all 0.8s ease-out;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
         }
 
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
+            will-change: auto;
         }
 
         /* Mobile Responsiveness */
