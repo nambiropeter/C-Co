@@ -70,6 +70,9 @@
             flex-direction: column;
             cursor: pointer;
             z-index: 1001;
+            background: transparent;
+            border: 0;
+            padding: 0;
         }
         .hamburger span {
             width: 25px;
@@ -87,6 +90,10 @@
         }
         .hamburger.active span:nth-child(3) {
             transform: rotate(45deg) translate(-5px, -6px);
+        }
+        .hamburger:focus-visible {
+            outline: 2px solid #ff004f;
+            outline-offset: 6px;
         }
         nav ul {
             display: flex;
@@ -174,6 +181,11 @@
             border-radius: 8px;
             transition: all 0.3s ease;
             user-select: none;
+            font-family: inherit;
+        }
+        .tab-links:focus-visible{
+            outline: 2px solid #ff004f;
+            outline-offset: 3px;
         }
         .tab-links:hover{
             background: #333;

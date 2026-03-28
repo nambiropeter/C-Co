@@ -32,51 +32,24 @@
     
     <script defer src="/_vercel/insights/script.js"></script>
 </head>
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const reveals = document.querySelectorAll(".reveal");
-
-        // Use a lower threshold and small negative bottom margin so
-        // elements on short/mobile viewports still register as intersecting.
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -20% 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add("active");
-                } else {
-                    entry.target.classList.remove("active");
-                }
-            });
-        }, observerOptions);
-
-        reveals.forEach((element) => {
-            observer.observe(element);
-        });
-    });
-</script>
-
 
 <body>
     <div id="header">
         <div class="container">
             <nav>
                 <img src="images/logo40.jpg" class="logo" alt="Mamati and Company Advocates Logo" width="140" height="70">
-                <ul id="nav-menu" class="nav-menu" role="navigation" aria-label="Main navigation">
+                <ul id="nav-menu" class="nav-menu" aria-label="Main navigation">
                     <li><a href="#header">Home</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#services">Services</a></li>
                     <li><a href="#success">Stories</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
-                <div class="hamburger" id="hamburger" role="button" aria-label="Toggle navigation menu" aria-expanded="false">
+                <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu" type="button">
                     <span></span>
                     <span></span>
                     <span></span>
-                </div>
+                </button>
             </nav>
             <div class="header-text">
                 <h1><span>Mamati</span> and Company<br>Advocates</h1>
@@ -92,11 +65,11 @@
                 </div>
                 <div class="about-col-2">
                    <h1 class="sub-title">About Mamati And Company </h1>
-                   <p>Mamati and Company Advocates is a budding law firm based in Nairobi, Kenya. We are dedicated to providing exceptional legal services tailored to the unique needs of individuals, both Natural and Legal across Africa. We pride ourselves in delivering comprehensive legal solutions with a focus on efficiency, precision, and personalized client care. We understand that every business is different, and we strive to offer strategic advice that helps our clients navigate the complexities of the legal landscape with confidence.</p>
+                   <p>Mamati and Company Advocates is a growing law firm based in Nairobi, Kenya. We are dedicated to providing exceptional legal services tailored to the unique needs of individuals, both natural and legal persons across Africa. We pride ourselves on delivering comprehensive legal solutions with a focus on efficiency, precision, and personalized client care. We understand that every business is different, and we strive to offer strategic advice that helps our clients navigate the complexities of the legal landscape with confidence.</p>
                 <div class="tab-titles">
-                    <p class="tab-links active-link" onclick="opentab('personalized')">Personalized Legal Strategies</p>
-                    <p class="tab-links" onclick="opentab('client')">Client-Centric Approach</p>
-                    <p class="tab-links" onclick="opentab('architects')">Architects of Tailored Solutions</p>
+                    <button class="tab-links active-link" data-tab="personalized" type="button">Personalized Legal Strategies</button>
+                    <button class="tab-links" data-tab="client" type="button">Client-Centric Approach</button>
+                    <button class="tab-links" data-tab="architects" type="button">Architects of Tailored Solutions</button>
                 </div>
 
                 <div class="tab-contents active-tab" id="personalized">
@@ -127,7 +100,7 @@
                     <div>
                         <i class="fa-regular fa-building"></i>
                         <h2>Corporate And Transactional</h2>
-                        <p>We provide tailored support to startups, offering comprehensive registration services for young entrepreneurs establishing businesses in Kenya. Our services include guidance on selecting the appropriate business structure, drafting and advising on relevant contracts and agreements, and delivering secretarial services to help clients navigate Nairobi's  and Kenya's dynamic business environment.</p>
+                        <p>We provide tailored support to startups, offering comprehensive registration services for young entrepreneurs establishing businesses in Kenya. Our services include guidance on selecting the appropriate business structure, drafting and advising on relevant contracts and agreements, and delivering secretarial services to help clients navigate Nairobi's and Kenya's dynamic business environment.</p>
                     </div>
                     <div>
                         <i class="fa-solid fa-person-military-pointing"></i>
@@ -190,7 +163,7 @@
                         <div class="contact-right">
                             <h1 class="sub-title">Location</h1>
                             <p>
-                                <a href="https://www.google.com/maps/place/Timau+Plaza,+Nairobi/@-1.2923504,36.7872193,17z/data=!3m1!4b1!4m6!3m5!1s0x182f10a3834eafa1:0x1821034ff3107263!8m2!3d-1.2923504!4d36.7897942!16s%2Fg%2F12hl93d1z?entry=ttu&g_ep=EgoyMDI1MDMxMi4wIKXMDSoJLDEwMjExNDU1SAFQAw%3D%3D"><i class="fa-solid fa-location-dot"></i></a>
+                                <a href="https://www.google.com/maps/place/Timau+Plaza,+Nairobi/@-1.2923504,36.7872193,17z/data=!3m1!4b1!4m6!3m5!1s0x182f10a3834eafa1:0x1821034ff3107263!8m2!3d-1.2923504!4d36.7897942!16s%2Fg%2F12hl93d1z?entry=ttu&g_ep=EgoyMDI1MDMxMi4wIKXMDSoJLDEwMjExNDU1SAFQAw%3D%3D" aria-label="Open Mamati and Company Advocates office location in Google Maps" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-location-dot"></i></a>
                                 <br>
                                 Timau Plaza <br>
                                 6th Floor, wing B <br>
@@ -209,41 +182,73 @@
 
 
     <script>
-        // Update copyright year automatically
-        document.getElementById('copyright-year').textContent = new Date().getFullYear();
-        
-        //About section transition
-        var tablinks = document.getElementsByClassName("tab-links");
-            var tabcontents = document.getElementsByClassName("tab-contents");
+        document.addEventListener('DOMContentLoaded', function () {
+            // Update copyright year automatically
+            document.getElementById('copyright-year').textContent = new Date().getFullYear();
 
-            function opentab(tabname){
-                for(tablink of tablinks){
-                    tablink.classList.remove("active-link");
-                }
-                for(tabcontent of tabcontents){
-                    tabcontent.classList.remove("active-tab");
-                }
-                event.currentTarget.classList.add("active-link");
-                document.getElementById(tabname).classList.add("active-tab");
+            // Reveal transitions
+            const reveals = document.querySelectorAll('.reveal');
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -20% 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    } else {
+                        entry.target.classList.remove('active');
+                    }
+                });
+            }, observerOptions);
+
+            reveals.forEach((element) => {
+                observer.observe(element);
+            });
+
+            // About section tabs
+            const tablinks = document.querySelectorAll('.tab-links');
+            const tabcontents = document.querySelectorAll('.tab-contents');
+
+            function openTab(tabname, triggerElement) {
+                tablinks.forEach((tablink) => {
+                    tablink.classList.remove('active-link');
+                });
+
+                tabcontents.forEach((tabcontent) => {
+                    tabcontent.classList.remove('active-tab');
+                });
+
+                triggerElement.classList.add('active-link');
+                document.getElementById(tabname).classList.add('active-tab');
             }
 
-        // Mobile menu toggle
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('nav-menu');
-        
-        hamburger.addEventListener('click', function() {
-            navMenu.classList.toggle('active');
-            hamburger.classList.toggle('active');
-            const isExpanded = hamburger.classList.contains('active');
-            hamburger.setAttribute('aria-expanded', isExpanded);
-        });
+            tablinks.forEach((tablink) => {
+                tablink.addEventListener('click', function () {
+                    openTab(tablink.dataset.tab, tablink);
+                });
+            });
 
-        // Close menu when a link is clicked
-        const navLinks = document.querySelectorAll('#nav-menu a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                navMenu.classList.remove('active');
-                hamburger.classList.remove('active');
+            // Mobile menu toggle
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('nav-menu');
+
+            hamburger.addEventListener('click', function () {
+                navMenu.classList.toggle('active');
+                hamburger.classList.toggle('active');
+                const isExpanded = hamburger.classList.contains('active');
+                hamburger.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+            });
+
+            // Close menu when a link is clicked
+            const navLinks = document.querySelectorAll('#nav-menu a');
+            navLinks.forEach((link) => {
+                link.addEventListener('click', function () {
+                    navMenu.classList.remove('active');
+                    hamburger.classList.remove('active');
+                    hamburger.setAttribute('aria-expanded', 'false');
+                });
             });
         });
     </script>
