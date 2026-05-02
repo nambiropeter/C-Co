@@ -2,7 +2,11 @@ export default function SuccessStoriesSection({ stories }) {
     return (
         <div id="success" className="reveal">
             <div className="container">
-                <h1 className="sub-title">Success Stories</h1>
+                
+                <h2 className="sub-title">Success Stories</h2>
+                <p className="section-intro">
+                    A snapshot of the professionalism and care clients say they experience when working with the firm.
+                </p>
                 <div className="success-stories">
                     {stories.map((story) => (
                         <div className="success1" key={`${story.title}-${story.alt}`}>

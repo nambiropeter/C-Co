@@ -12,8 +12,11 @@ import {
     LEGAL_SERVICE_SCHEMA,
     NAV_ITEMS,
     OFFICE_MAP_URL,
+    ORGANIZATION_SCHEMA,
+    PERSON_SCHEMA,
     SERVICES,
     STORIES,
+    WEBSITE_SCHEMA,
     TAB_CONTENT
 } from './data/siteContent';
 import { useRevealObserver } from './hooks/useRevealObserver';
@@ -31,7 +34,7 @@ function App() {
             <SuccessStoriesSection stories={STORIES} />
             <ContactSection officeMapUrl={OFFICE_MAP_URL} />
             <Footer />
-            <SeoSchema schema={LEGAL_SERVICE_SCHEMA} />
+            <SeoSchema schema={[LEGAL_SERVICE_SCHEMA, ORGANIZATION_SCHEMA, PERSON_SCHEMA, WEBSITE_SCHEMA]} />
             <Analytics />
             <SpeedInsights />
         </>

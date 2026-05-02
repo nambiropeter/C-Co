@@ -8,61 +8,67 @@ export const NAV_ITEMS = [
 
 export const TAB_CONTENT = {
     personalized:
-        "At Mamati and Company Advocates, we prioritize understanding each client's unique needs and objectives. Our legal strategies are carefully crafted to perfectly align with your specific business goals and long-term vision.",
+        'We start by understanding the facts, the risks, and the outcome you actually need. Every strategy is built to be practical, specific, and aligned with the client\'s commercial reality.',
     client:
-        "We don't just provide legal services, we're committed to building genuine partnerships with our clients. We take the time to deeply understand your business, ensuring every piece of advice serves your best interests.",
+        'Clients work with us because communication is clear, advice is candid, and the process stays focused on progress. The goal is not just to advise, but to move the matter forward with confidence.',
     architects:
-        "Our strength lies in our ability to adapt and respond to your evolving needs. We're not just reactive legal counsel, but proactive problem-solvers who work alongside you to architect customized solutions that drive your continued growth and development."
+        'We combine responsiveness with disciplined execution, so the legal work adapts as the matter evolves. That makes it easier to stay ahead of problems instead of reacting after the fact.'
 };
 
 export const SERVICES = [
     {
         icon: 'fa-solid fa-handshake',
-        title: 'Litigation and Dispute Resolution',
+        title: 'Litigation & Dispute Resolution',
         description:
-            'We offer a wide array of Dispute Resolution Solutions, ranging from Mediation and Negotiation to the last option of Litigation, with an emphasis in assuring our clients the best possible outcome.'
+            'From negotiation and mediation to full litigation, we help clients resolve disputes with a clear strategy and a steady hand.'
     },
     {
         icon: 'fa-regular fa-building',
-        title: 'Corporate And Transactional',
+        title: 'Corporate & Transactional',
         description:
-            "We provide tailored support to startups, offering comprehensive registration services for young entrepreneurs establishing businesses in Kenya. Our services include guidance on selecting the appropriate business structure, drafting and advising on relevant contracts and agreements, and delivering secretarial services to help clients navigate Nairobi's and Kenya's dynamic business environment."
+            'We support founders and established businesses with registrations, contracts, governance, and day-to-day commercial legal work.'
     },
     {
         icon: 'fa-solid fa-person-military-pointing',
         title: 'Intellectual Property',
         description:
-            'We offer our clients the most effective solutions to safeguard their unique creations, ideas, and designs. By facilitating IP registration, handling infringement claims, and supporting commercialization, we ensure that our clients can rest easy, knowing their work is thoroughly protected.'
+            'We help protect brands, creative assets, and inventions through registration, enforcement, and practical IP advice.'
     },
     {
         icon: 'fa-solid fa-people-roof',
-        title: 'Family Law',
+        title: 'Family & Private Client',
         description:
-            "We provide comprehensive family law services, including guidance on property acquisition, asset management, and estate planning. Our goal is to support families in building and preserving their wealth, while also offering compassionate assistance through life's transitions such as custody arrangements and divorce."
+            'We handle family and personal matters with discretion, care, and a strong focus on protecting what matters most.'
+    },
+    {
+        icon: 'fa-solid fa-file-signature',
+        title: 'Conveyancing',
+        description:
+            'We support property transactions with due diligence, drafting, completion, and practical guidance that keeps the process moving.'
     }
 ];
 
 export const STORIES = [
     {
         image: '/images/man6.png',
-        alt: 'Client testimonial',
+        alt: 'Client testimonial from a legal matter handled by Mamati and Company Advocates',
         title: 'Client, 2024',
-        copy: '"A professional legal practitioner who embeds risk mitigation in each step."',
+        copy: '"Professional, responsive, and careful at every step of the matter."',
         icon: 'fa-solid fa-user'
     },
     {
         image: '/images/company.png',
-        alt: 'Corporate client testimonial',
-        title: 'Client, 2024',
-        copy: '"The level of professionalism from Mamati and Company is a breath of fresh air. We have enjoyed our work with him and look forward to working with him throughout 2024 and beyond."',
+        alt: 'Corporate client testimonial for Mamati and Company Advocates',
+        title: 'Corporate Client',
+        copy: '"The firm communicates clearly, keeps matters moving, and always feels prepared."',
         extra: 'Company based in Kenya',
         icon: 'fa-solid fa-building'
     },
     {
         image: '/images/man6.png',
-        alt: 'Client testimonial',
+        alt: 'Another client testimonial highlighting care and follow-through',
         title: 'Client',
-        copy: '"Charles took me through my matter slowly and meticulously with care and support. His attention to detail, almost constant availability to pick up the phone and walk me through was something I would want everyone to experience from a lawyer in Nairobi and Kenya."',
+        copy: '"Careful advice, strong follow-through, and a level of patience that made a difficult process manageable."',
         icon: 'fa-solid fa-user'
     }
 ];
@@ -72,7 +78,14 @@ export const LEGAL_SERVICE_SCHEMA = {
     '@type': 'LegalService',
     name: 'Mamati and Company Advocates',
     description:
-        'Leading law firm in Nairobi, Kenya specializing in litigation, corporate law, intellectual property, and family law',
+        'Leading law firm in Nairobi, Kenya specializing in litigation, corporate law, intellectual property, family law, and conveyancing.',
+    serviceType: [
+        'Litigation and dispute resolution',
+        'Corporate and transactional law',
+        'Intellectual property law',
+        'Family and private client law',
+        'Conveyancing'
+    ],
     address: {
         '@type': 'PostalAddress',
         streetAddress: 'Timau Plaza, 6th Floor, Wing B',
@@ -88,6 +101,54 @@ export const LEGAL_SERVICE_SCHEMA = {
         '@type': 'Country',
         name: 'Kenya'
     }
+};
+
+export const WEBSITE_SCHEMA = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Mamati and Company Advocates',
+    url: 'https://mamatiadvocates.net/',
+    description:
+    'Nairobi law firm serving businesses and individuals across Kenya with litigation, corporate, intellectual property, family, and conveyancing legal services.'
+};
+
+export const ORGANIZATION_SCHEMA = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Mamati and Company Advocates',
+    url: 'https://mamatiadvocates.net/',
+    logo: 'https://mamatiadvocates.net/images/logo40.jpg',
+    contactPoint: [
+        {
+            '@type': 'ContactPoint',
+            telephone: '+254713590466',
+            contactType: 'customer service',
+            areaServed: 'KE',
+            availableLanguage: ['en']
+        }
+    ]
+};
+
+export const PERSON_SCHEMA = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Chebosi Mamati',
+    jobTitle: 'Senior Partner',
+    worksFor: {
+        '@type': 'Organization',
+        name: 'Mamati and Company Advocates',
+        url: 'https://mamatiadvocates.net/'
+    },
+    url: 'https://mamatiadvocates.net/',
+    description:
+        'Chebosi Mamati is the senior partner at Mamati and Company Advocates, focusing on practical legal solutions for clients in Kenya.',
+    knowsAbout: [
+        'Litigation and dispute resolution',
+        'Corporate and transactional law',
+        'Intellectual property law',
+        'Family law',
+        'Conveyancing'
+    ]
 };
 
 export const OFFICE_MAP_URL =

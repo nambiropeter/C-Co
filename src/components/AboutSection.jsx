@@ -5,22 +5,29 @@ export default function AboutSection({ activeTab, setActiveTab, tabContent }) {
                 <div className="row">
                     <div className="about-col-1">
                         <img
-                            src="/images/law4.png"
-                            alt="Legal representation and consulting"
+                            src="/images/Charles%20Mamati.jpeg"
+                            alt="Chebosi Mamati, senior partner of Mamati and Company Advocates"
                             loading="lazy"
                         />
                     </div>
                     <div className="about-col-2">
-                        <h1 className="sub-title">About Mamati And Company</h1>
+                        <p className="section-kicker">About</p>
+                        <h2 className="sub-title">About Chebosi Mamati</h2>
                         <p>
-                            Mamati and Company Advocates is a growing law firm based in Nairobi, Kenya.
-                            We are dedicated to providing exceptional legal services tailored to the unique
-                            needs of individuals, both natural and legal persons across Africa. We pride
-                            ourselves on delivering comprehensive legal solutions with a focus on efficiency,
-                            precision, and personalized client care. We understand that every business is
-                            different, and we strive to offer strategic advice that helps our clients
-                            navigate the complexities of the legal landscape with confidence.
+                            Chebosi Mamati is the senior partner of Mamati and Company Advocates. He leads the
+                            firm with a clear, practical approach to legal work, combining careful judgment,
+                            client focus, and a steady commitment to getting matters moving.
                         </p>
+                        <p>
+                            His work supports individuals, entrepreneurs, and established businesses through
+                            responsive advice, disciplined execution, and strategies built around real-world
+                            outcomes.
+                        </p>
+                        <div className="about-points">
+                            <span>Practical leadership</span>
+                            <span>Clear communication</span>
+                            <span>Results-oriented execution</span>
+                        </div>
                         <div className="tab-titles">
                             <button
                                 className={`tab-links ${activeTab === 'personalized' ? 'active-link' : ''}`}
@@ -47,19 +54,19 @@ export default function AboutSection({ activeTab, setActiveTab, tabContent }) {
 
                         <div className={`tab-contents ${activeTab === 'personalized' ? 'active-tab' : ''}`}>
                             <p>
-                                <span>At Mamati and Company Advocates,</span>{' '}
+                                <span>Chebosi Mamati works to keep matters practical,</span>{' '}
                                 {tabContent.personalized}
                             </p>
                         </div>
                         <div className={`tab-contents ${activeTab === 'client' ? 'active-tab' : ''}`}>
                             <p>
-                                <span>We don't just provide legal services, </span>
+                                <span>Clients work with Chebosi for clarity and follow-through, </span>
                                 {tabContent.client}
                             </p>
                         </div>
                         <div className={`tab-contents ${activeTab === 'architects' ? 'active-tab' : ''}`}>
                             <p>
-                                <span>Our strength </span>
+                                <span>His strength </span>
                                 {tabContent.architects}
                             </p>
                         </div>
