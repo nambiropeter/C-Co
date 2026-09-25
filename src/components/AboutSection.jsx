@@ -1,18 +1,48 @@
-export default function AboutSection({ activeTab, setActiveTab, tabContent }) {
+import { useRef } from 'react';
+import ResponsiveImage from './ResponsiveImage';
+import { ABOUT_PORTRAIT, ABOUT_PORTRAIT_SIZES } from '../data/siteContent';
+
+export default function AboutSection({ activeTab, setActiveTab, tabs }) {
+    const tabRefs = useRef([]);
+
+    // Standard tablist keyboard behaviour: arrows move between tabs, Home/End
+    // jump to the ends. Without this the tabs are unreachable for anyone using
+    // a keyboard, a switch device, or a screen reader.
+    const onTabKeyDown = (event, index) => {
+        const lastIndex = tabs.length - 1;
+        let nextIndex = null;
+
+        if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+            nextIndex = index === lastIndex ? 0 : index + 1;
+        } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+            nextIndex = index === 0 ? lastIndex : index - 1;
+        } else if (event.key === 'Home') {
+            nextIndex = 0;
+        } else if (event.key === 'End') {
+            nextIndex = lastIndex;
+        }
+
+        if (nextIndex === null) return;
+
+        event.preventDefault();
+        setActiveTab(tabs[nextIndex].id);
+        tabRefs.current[nextIndex]?.focus();
+    };
+
     return (
-        <div id="about" className="reveal">
+        <section id="about" className="reveal" aria-labelledby="about-title">
             <div className="container">
                 <div className="row">
                     <div className="about-col-1">
-                        <img
-                            src="/images/Charles%20Mamati.jpeg"
+                        <ResponsiveImage
+                            image={ABOUT_PORTRAIT}
+                            sizes={ABOUT_PORTRAIT_SIZES}
                             alt="Chebosi Mamati, senior partner of Mamati and Company Advocates"
-                            loading="lazy"
                         />
                     </div>
                     <div className="about-col-2">
                         <p className="section-kicker">About</p>
-                        <h2 className="sub-title">About Chebosi Mamati</h2>
+                        <h2 className="sub-title" id="about-title">About Chebosi Mamati</h2>
                         <p>
                             Chebosi Mamati is the senior partner of Mamati and Company Advocates. He leads the
                             firm with a clear, practical approach to legal work, combining careful judgment,
@@ -28,51 +58,55 @@ export default function AboutSection({ activeTab, setActiveTab, tabContent }) {
                             <span>Clear communication</span>
                             <span>Results-oriented execution</span>
                         </div>
-                        <div className="tab-titles">
-                            <button
-                                className={`tab-links ${activeTab === 'personalized' ? 'active-link' : ''}`}
-                                type="button"
-                                onClick={() => setActiveTab('personalized')}
-                            >
-                                Personalized Legal Strategies
-                            </button>
-                            <button
-                                className={`tab-links ${activeTab === 'client' ? 'active-link' : ''}`}
-                                type="button"
-                                onClick={() => setActiveTab('client')}
-                            >
-                                Client-Centric Approach
-                            </button>
-                            <button
-                                className={`tab-links ${activeTab === 'architects' ? 'active-link' : ''}`}
-                                type="button"
-                                onClick={() => setActiveTab('architects')}
-                            >
-                                Architects of Tailored Solutions
-                            </button>
+
+                        <div className="tab-titles" role="tablist" aria-label="How the firm works">
+                            {tabs.map((tab, index) => {
+                                const isActive = activeTab === tab.id;
+
+                                return (
+                                    <button
+                                        key={tab.id}
+                                        id={`tab-${tab.id}`}
+                                        role="tab"
+                                        type="button"
+                                        className={`tab-links ${isActive ? 'active-link' : ''}`}
+                                        aria-selected={isActive}
+                                        aria-controls={`tabpanel-${tab.id}`}
+                                        tabIndex={isActive ? 0 : -1}
+                                        ref={(node) => {
+                                            tabRefs.current[index] = node;
+                                        }}
+                                        onClick={() => setActiveTab(tab.id)}
+                                        onKeyDown={(event) => onTabKeyDown(event, index)}
+                                    >
+                                        {tab.label}
+                                    </button>
+                                );
+                            })}
                         </div>
 
-                        <div className={`tab-contents ${activeTab === 'personalized' ? 'active-tab' : ''}`}>
-                            <p>
-                                <span>Chebosi Mamati works to keep matters practical,</span>{' '}
-                                {tabContent.personalized}
-                            </p>
-                        </div>
-                        <div className={`tab-contents ${activeTab === 'client' ? 'active-tab' : ''}`}>
-                            <p>
-                                <span>Clients work with Chebosi for clarity and follow-through, </span>
-                                {tabContent.client}
-                            </p>
-                        </div>
-                        <div className={`tab-contents ${activeTab === 'architects' ? 'active-tab' : ''}`}>
-                            <p>
-                                <span>His strength </span>
-                                {tabContent.architects}
-                            </p>
-                        </div>
+                        {tabs.map((tab) => {
+                            const isActive = activeTab === tab.id;
+
+                            return (
+                                <div
+                                    key={tab.id}
+                                    id={`tabpanel-${tab.id}`}
+                                    role="tabpanel"
+                                    aria-labelledby={`tab-${tab.id}`}
+                                    tabIndex={0}
+                                    hidden={!isActive}
+                                    className={`tab-contents ${isActive ? 'active-tab' : ''}`}
+                                >
+                                    <p>
+                                        <span>{tab.lead}</span> {tab.body}
+                                    </p>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
 }

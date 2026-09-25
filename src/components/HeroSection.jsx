@@ -1,54 +1,11 @@
-export default function HeaderSection({ isMenuOpen, setIsMenuOpen, navItems }) {
-    const closeMenu = () => setIsMenuOpen(false);
-
+export default function HeroSection() {
     return (
-        <div id="header">
+        <section id="header" className="hero" aria-labelledby="hero-title">
             <div className="container">
-                <nav className="site-nav">
-                    <a className="brand" href="#header" onClick={closeMenu} aria-label="Mamati and Company Advocates home">
-                        <img
-                            src="/images/logo40.jpg"
-                            className="logo"
-                            alt="Mamati and Company Advocates Logo"
-                            width="140"
-                            height="70"
-                        />
-                        <span className="brand-text">Mamati and Company Advocates</span>
-                    </a>
-                    <div className="nav-actions">
-                        <ul
-                            id="nav-menu"
-                            className={`nav-menu ${isMenuOpen ? 'active' : ''}`}
-                            aria-label="Main navigation"
-                        >
-                            {navItems.map((item) => (
-                                <li key={item.href}>
-                                    <a href={item.href} onClick={closeMenu}>{item.label}</a>
-                                </li>
-                            ))}
-                        </ul>
-                        <a className="nav-cta" href="#contact" onClick={closeMenu}>
-                            Book a Consultation
-                        </a>
-                        <button
-                            className={`hamburger ${isMenuOpen ? 'active' : ''}`}
-                            id="hamburger"
-                            aria-label="Toggle navigation menu"
-                            aria-expanded={isMenuOpen ? 'true' : 'false'}
-                            aria-controls="nav-menu"
-                            type="button"
-                            onClick={() => setIsMenuOpen((open) => !open)}
-                        >
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </button>
-                    </div>
-                </nav>
                 <div className="hero-grid reveal active">
                     <div className="hero-copy">
                         <p className="eyebrow">Nairobi counsel for Kenya and cross-border business</p>
-                        <h1>
+                        <h1 id="hero-title">
                             Clear guidance, practical solutions, and support you can count on.
                         </h1>
                         <p className="hero-lead">
@@ -95,6 +52,6 @@ export default function HeaderSection({ isMenuOpen, setIsMenuOpen, navItems }) {
                     </aside>
                 </div>
             </div>
-        </div>
+        </section>
     );
 }

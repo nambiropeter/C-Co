@@ -25,10 +25,14 @@
 
 html {
     scroll-behavior: smooth;
+    /* Keeps section headings clear of the fixed nav bar when jumping to an anchor. */
+    scroll-padding-top: 118px;
+    -webkit-text-size-adjust: 100%;
 }
 
 body {
     color: var(--text);
+    overflow-wrap: break-word;
     background:
         radial-gradient(circle at top left, rgba(200, 169, 106, 0.12), transparent 34%),
         radial-gradient(circle at top right, rgba(90, 116, 179, 0.11), transparent 26%),
@@ -54,19 +58,68 @@ a {
     color: inherit;
 }
 
+a,
+button {
+    -webkit-tap-highlight-color: rgba(200, 169, 106, 0.2);
+}
+
 img {
     display: block;
     max-width: 100%;
 }
 
+/* <picture> is only a wrapper; let the <img> take part in the grid directly. */
+picture {
+    display: contents;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+
+.skip-link {
+    position: fixed;
+    top: 14px;
+    left: 50%;
+    z-index: 2000;
+    padding: 12px 22px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #101726;
+    font-weight: 800;
+    text-decoration: none;
+    transform: translate(-50%, -160%);
+    transition: transform 0.2s ease;
+}
+
+.skip-link:focus {
+    transform: translate(-50%, 0);
+}
+
+main:focus {
+    outline: none;
+}
+
 .container {
-    width: min(var(--container), calc(100% - 40px));
+    /* The safe-area terms keep copy clear of notches and rounded corners. */
+    width: min(
+        var(--container),
+        calc(100% - 40px - env(safe-area-inset-left) - env(safe-area-inset-right))
+    );
     margin: 0 auto;
 }
 
 #header {
     position: relative;
     min-height: 100vh;
+    /* svh ignores the collapsing mobile browser chrome, so the hero does not
+       jump as the address bar hides and reappears. */
+    min-height: 100svh;
     padding-top: 96px;
     overflow: clip;
     background:
@@ -97,7 +150,10 @@ img {
     top: 14px;
     left: 50%;
     right: auto;
-    width: min(calc(var(--container) + 56px), calc(100% - 28px));
+    width: min(
+        calc(var(--container) + 56px),
+        calc(100% - 28px - env(safe-area-inset-left) - env(safe-area-inset-right))
+    );
     height: 86px;
     padding: 0 26px;
     display: flex;
@@ -180,6 +236,12 @@ img {
     display: inline-flex;
 }
 
+/* The consultation button is duplicated inside the drop-down menu so it stays
+   reachable on the narrow layouts where the nav bar has no room for it. */
+.nav-menu .nav-menu-cta {
+    display: none;
+}
+
 .nav-menu a {
     position: relative;
     padding: 6px 0;
@@ -211,6 +273,14 @@ img {
 
 .nav-menu a:hover::after,
 .nav-menu a:focus-visible::after {
+    transform: scaleX(1);
+}
+
+.nav-menu a.is-current {
+    color: var(--text);
+}
+
+.nav-menu a.is-current::after {
     transform: scaleX(1);
 }
 
@@ -266,11 +336,16 @@ img {
 .hamburger {
     display: none;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: 5px;
+    /* 44px square: the minimum comfortable touch target. */
+    width: 44px;
+    height: 44px;
     cursor: pointer;
     background: transparent;
     border: 0;
-    padding: 8px;
+    padding: 0;
     border-radius: 12px;
 }
 
@@ -301,6 +376,7 @@ img {
 
 .hero-grid {
     min-height: calc(100vh - 96px);
+    min-height: calc(100svh - 96px);
     padding: 64px 0 42px;
     display: grid;
     grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
@@ -382,7 +458,7 @@ img {
 
 .hero-panel,
 .location-card,
-.services-list div,
+.service-card,
 .success1,
 .about-col-1 img,
 .tab-links,
@@ -451,6 +527,9 @@ img {
 
 .about-col-1 img {
     width: 100%;
+    /* The intrinsic width/height attributes reserve space while loading; height:auto
+       hands the final ratio back to aspect-ratio below. */
+    height: auto;
     aspect-ratio: 0.92;
     object-fit: cover;
     box-shadow: var(--shadow);
@@ -549,6 +628,11 @@ img {
     font-weight: 800;
 }
 
+.services-list,
+.success-stories {
+    list-style: none;
+}
+
 .services-list {
     margin-top: 32px;
     display: grid;
@@ -579,9 +663,11 @@ img {
     background: linear-gradient(90deg, transparent, rgba(200, 169, 106, 0.8), transparent);
 }
 
-.service-card:hover {
-    transform: translateY(-8px);
-    border-color: rgba(200, 169, 106, 0.35);
+@media (hover: hover) and (pointer: fine) {
+    .service-card:hover {
+        transform: translateY(-8px);
+        border-color: rgba(200, 169, 106, 0.35);
+    }
 }
 
 .service-index {
@@ -606,7 +692,7 @@ img {
     color: var(--accent);
 }
 
-.services-list h2 {
+.services-list h3 {
     margin-top: 18px;
     font-size: 1.18rem;
     line-height: 1.35;
@@ -633,6 +719,7 @@ img {
 
 .success1 img {
     width: 100%;
+    height: auto;
     aspect-ratio: 0.88;
     object-fit: cover;
     filter: saturate(0.95) contrast(1.02);
@@ -649,7 +736,6 @@ img {
     justify-content: flex-end;
     gap: 10px;
     background: linear-gradient(180deg, rgba(10, 16, 29, 0.08), rgba(10, 16, 29, 0.96));
-    transform: translateY(42%);
     transition: transform 0.4s ease;
 }
 
@@ -676,12 +762,22 @@ img {
     background: linear-gradient(135deg, var(--accent), #dfc58f);
 }
 
-.success1:hover img {
-    transform: scale(1.06);
-}
+/* Only devices with a real pointer get the hover-to-reveal treatment. On a
+   phone or tablet there is no hover, so the testimonial is shown outright
+   instead of being stuck behind an interaction that cannot happen. */
+@media (hover: hover) and (pointer: fine) {
+    .layer {
+        transform: translateY(42%);
+    }
 
-.success1:hover .layer {
-    transform: translateY(0);
+    .success1:hover img {
+        transform: scale(1.06);
+    }
+
+    .success1:hover .layer,
+    .success1:focus-within .layer {
+        transform: translateY(0);
+    }
 }
 
 .contact-left,
@@ -710,6 +806,27 @@ img {
     padding: 28px;
 }
 
+.contact-line a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(200, 169, 106, 0.45);
+    overflow-wrap: anywhere;
+    transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+.contact-line a:hover,
+.contact-line a:focus-visible {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+
+.location-card address {
+    margin-top: 18px;
+    font-style: normal;
+    line-height: 1.8;
+    color: var(--muted);
+}
+
 .location-card p {
     margin-top: 18px;
 }
@@ -724,18 +841,22 @@ img {
     padding: 18px 0;
     text-align: center;
     color: rgba(244, 239, 230, 0.78);
+    padding-bottom: max(18px, env(safe-area-inset-bottom));
     background: rgba(3, 7, 14, 0.9);
     border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.reveal {
+/* Sections are visible by default. The reveal animation is only armed once the
+   script confirms IntersectionObserver is available and motion is welcome, so a
+   failed bundle or an old browser never leaves the page blank. */
+.js-reveal .reveal {
     opacity: 0;
     transform: translateY(34px);
     transition: opacity 0.8s ease, transform 0.8s ease;
     will-change: opacity, transform;
 }
 
-.reveal.active {
+.js-reveal .reveal.active {
     opacity: 1;
     transform: translateY(0);
     will-change: auto;
@@ -757,7 +878,83 @@ img {
     }
 }
 
+/* Logo, five links and the consultation button stop fitting in one bar at
+   roughly 980px, which covers portrait tablets and small laptops as well as
+   phones. Below that the links collapse into the drop-down menu. */
+@media only screen and (max-width: 980px) {
+    .site-nav {
+        overflow: visible;
+    }
+
+    .nav-cta-bar {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-menu {
+        position: absolute;
+        top: calc(100% + 10px);
+        left: 0;
+        width: 100%;
+        padding: 12px 16px 16px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 4px;
+        background: rgba(3, 7, 14, 0.97);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 16px;
+        box-shadow: 0 18px 36px rgba(0, 0, 0, 0.35);
+        transform: translateY(-10px);
+        opacity: 0;
+        visibility: hidden;
+        transition: transform 0.25s ease, opacity 0.25s ease, visibility 0.25s ease;
+        pointer-events: none;
+        z-index: 1001;
+    }
+
+    .nav-menu.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .nav-menu li {
+        display: block;
+    }
+
+    /* Full-width rows at least 44px tall, so each link is an easy tap. */
+    .nav-menu a {
+        display: flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 6px 2px;
+        font-size: 1rem;
+    }
+
+    .nav-menu a::after {
+        width: 28px;
+    }
+
+    .nav-menu .nav-menu-cta {
+        display: block;
+        margin-top: 10px;
+    }
+
+    .nav-menu-cta .nav-cta {
+        width: 100%;
+    }
+}
+
 @media only screen and (max-width: 768px) {
+    html {
+        /* Matches the shorter nav bar at this width. */
+        scroll-padding-top: 100px;
+    }
+
     .site-nav {
         height: 76px;
         top: 10px;
@@ -798,47 +995,6 @@ img {
         flex: 0 0 auto;
     }
 
-    .nav-cta {
-        display: none;
-    }
-
-    .hamburger {
-        display: flex;
-        padding: 6px;
-    }
-
-    .nav-menu {
-        position: absolute;
-        top: calc(100% + 10px);
-        left: 0;
-        width: 100%;
-        padding: 16px 16px 20px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
-        background: rgba(3, 7, 14, 0.97);
-        border: 1px solid rgba(255, 255, 255, 0.14);
-        border-radius: 16px;
-        box-shadow: 0 18px 36px rgba(0, 0, 0, 0.35);
-        transform: translateY(-10px);
-        opacity: 0;
-        visibility: hidden;
-        transition: transform 0.25s ease, opacity 0.25s ease, visibility 0.25s ease;
-        pointer-events: none;
-        z-index: 1001;
-    }
-
-    .nav-menu.active {
-        transform: translateY(0);
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-    }
-
-    .nav-menu a {
-        font-size: 1rem;
-    }
-
     #header {
         padding-top: 76px;
         background-position: center 28%;
@@ -847,6 +1003,7 @@ img {
     .hero-grid {
         padding: 34px 0 30px;
         min-height: calc(100vh - 76px);
+        min-height: calc(100svh - 76px);
         gap: 22px;
     }
 
@@ -911,13 +1068,7 @@ img {
     }
 
     .layer {
-        transform: translateY(0);
         min-height: auto;
-    }
-
-    .reveal {
-        opacity: 1 !important;
-        transform: translateY(0) !important;
     }
 }
 
@@ -971,4 +1122,74 @@ img {
         font-size: 0.84rem;
         padding: 14px 0;
     }
+}
+
+/* Short landscape windows (a phone turned sideways, a split-screen tablet)
+   should not be forced to scroll a full viewport before reaching any copy. */
+@media only screen and (max-height: 560px) and (orientation: landscape) {
+    #header {
+        min-height: auto;
+    }
+
+    .hero-grid {
+        min-height: auto;
+        padding: 26px 0 40px;
+    }
+
+    .hero-copy h1 {
+        font-size: clamp(2.2rem, 6vw, 3.2rem);
+    }
+
+    #about,
+    #services,
+    #success,
+    #contact {
+        padding: 56px 0;
+    }
+}
+
+/* Respect the system-wide "reduce motion" setting. */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .reveal,
+    .js-reveal .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+/* Shown only when scripting is unavailable, so the firm is still contactable. */
+.noscript-fallback {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 80px 24px;
+    text-align: center;
+}
+
+.noscript-fallback h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 6vw, 3rem);
+    line-height: 1.05;
+}
+
+.noscript-fallback p {
+    margin-top: 16px;
+    line-height: 1.8;
+    color: var(--muted);
+}
+
+.noscript-fallback a {
+    color: var(--accent);
 }

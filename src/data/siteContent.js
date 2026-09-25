@@ -6,14 +6,59 @@ export const NAV_ITEMS = [
     { href: '#contact', label: 'Contact' }
 ];
 
-export const TAB_CONTENT = {
-    personalized:
-        'We start by understanding the facts, the risks, and the outcome you actually need. Every strategy is built to be practical, specific, and aligned with the client\'s commercial reality.',
-    client:
-        'Clients work with us because communication is clear, advice is candid, and the process stays focused on progress. The goal is not just to advise, but to move the matter forward with confidence.',
-    architects:
-        'We combine responsiveness with disciplined execution, so the legal work adapts as the matter evolves. That makes it easier to stay ahead of problems instead of reacting after the fact.'
+export const NAV_SECTION_IDS = NAV_ITEMS.map((item) => item.href.slice(1));
+
+export const CONTACT = {
+    email: 'chebosic@mamatiadvocates.net',
+    phoneDisplay: '+254 713 590 466',
+    phoneDial: '+254713590466'
 };
+
+// Pre-generated responsive derivatives live in /public/images/optimized.
+// `sizes` tells the browser how wide the image renders so it can pick the
+// smallest file that still looks sharp on that device.
+function responsiveImage(stem, widths, aspect) {
+    const largest = widths[widths.length - 1];
+
+    return {
+        src: `/images/optimized/${stem}-${largest}.jpg`,
+        webpSrcSet: widths.map((w) => `/images/optimized/${stem}-${w}.webp ${w}w`).join(', '),
+        jpegSrcSet: widths.map((w) => `/images/optimized/${stem}-${w}.jpg ${w}w`).join(', '),
+        width: largest,
+        height: Math.round(largest / aspect)
+    };
+}
+
+const PORTRAIT_ASPECT = 1587 / 2245;
+
+export const ABOUT_PORTRAIT = responsiveImage('mamati', [640, 850], 850 / 1280);
+
+// Story cards sit in a 3-up grid (1180px container), 2-up under 1100px and 1-up under 768px.
+export const STORY_SIZES =
+    '(max-width: 768px) calc(100vw - 40px), (max-width: 1100px) calc((100vw - 62px) / 2), (max-width: 1220px) calc((100vw - 84px) / 3), 378px';
+
+export const ABOUT_PORTRAIT_SIZES = '(max-width: 1100px) calc(100vw - 40px), 568px';
+
+export const ABOUT_TABS = [
+    {
+        id: 'personalized',
+        label: 'Personalized Legal Strategies',
+        lead: 'Chebosi Mamati works to keep matters practical,',
+        body: 'We start by understanding the facts, the risks, and the outcome you actually need. Every strategy is built to be practical, specific, and aligned with the client’s commercial reality.'
+    },
+    {
+        id: 'client',
+        label: 'Client-Centric Approach',
+        lead: 'Clients work with Chebosi for clarity and follow-through,',
+        body: 'Clients work with us because communication is clear, advice is candid, and the process stays focused on progress. The goal is not just to advise, but to move the matter forward with confidence.'
+    },
+    {
+        id: 'architects',
+        label: 'Architects of Tailored Solutions',
+        lead: 'His strength',
+        body: 'We combine responsiveness with disciplined execution, so the legal work adapts as the matter evolves. That makes it easier to stay ahead of problems instead of reacting after the fact.'
+    }
+];
 
 export const SERVICES = [
     {
@@ -50,14 +95,16 @@ export const SERVICES = [
 
 export const STORIES = [
     {
-        image: '/images/man6.png',
+        id: 'client-2024',
+        image: responsiveImage('man6', [480, 900], PORTRAIT_ASPECT),
         alt: 'Client testimonial from a legal matter handled by Mamati and Company Advocates',
         title: 'Client, 2024',
         copy: '"Professional, responsive, and careful at every step of the matter."',
         icon: 'fa-solid fa-user'
     },
     {
-        image: '/images/company.png',
+        id: 'corporate-client',
+        image: responsiveImage('company', [480, 900], PORTRAIT_ASPECT),
         alt: 'Corporate client testimonial for Mamati and Company Advocates',
         title: 'Corporate Client',
         copy: '"The firm communicates clearly, keeps matters moving, and always feels prepared."',
@@ -65,7 +112,8 @@ export const STORIES = [
         icon: 'fa-solid fa-building'
     },
     {
-        image: '/images/man6.png',
+        id: 'client-follow-through',
+        image: responsiveImage('man6', [480, 900], PORTRAIT_ASPECT),
         alt: 'Another client testimonial highlighting care and follow-through',
         title: 'Client',
         copy: '"Careful advice, strong follow-through, and a level of patience that made a difficult process manageable."',
